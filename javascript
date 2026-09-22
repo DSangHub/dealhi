@@ -38,4 +38,66 @@ export async function findBestProductDeal(query, userPreferences) {
 
   const result = await model.generateContent(prompt);
   return JSON.parse(result.response.text());
+} 
+// pages/api/trigger-checkout.js
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
+
+  const { userId, platform, productDetails } = req.body;
+
+  try {
+    // 1. Fetch encrypted platform auth token
+    const { data: account, error: authError } = await supabase
+      .from('linked_accounts')
+      .select('auth_token')
+      .eq('user_id', userId)
+      .eq('platform', platform)
+      .single();
+
+    if (authError || !account) {
+      return res.status(400).json({ error: `Please connect your ${platform} account first.` });
+    }
+
+    // 2. Fetch default shipping address and UPI/Card credentials
+    const { data: user } = await supabase
+      .from('user_profiles')
+      .select('default_address, upi_id')
+      .eq('id', userId)
+      .single();
+
+    // 3. Dispatch automated purchase payload to platform API middleware
+    const purchaseResponse = await fetch(`https://api.dealhi.app/v1/bridge/${platform}/buy`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${account.auth_token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        skuId: productDetails.skuId,
+        shippingAddress: user.default_address,
+        paymentMethod: 'UPI_DIRECT',
+        upiId: user.upi_id
+      })
+    });
+
+    const result = await purchaseResponse.json();
+
+    // 4. Log trigger event
+    await supabase.from('order_triggers').insert({
+      user_id: userId,
+      platform: platform,
+      product_name: productDetails.productName,
+      price_inr: productDetails.priceINR,
+      status: result.success ? 'SUCCESS' : 'FAILED'
+    });
+
+    return res.status(200).json({ success: true, message: 'Purchase triggered successfully!', details: result });
+
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 }
