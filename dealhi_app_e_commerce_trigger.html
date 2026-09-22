@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DealHi.app | Direct Intent & Fast Buy Engine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Custom scrollbar styling for A-Z bar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen font-sans flex flex-col justify-between selection:bg-orange-500 selection:text-black">
+
+  <!-- Top Navigation Header -->
+  <header class="border-b border-gray-800 bg-gray-900/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-r from-orange-500 to-amber-500 text-black font-black text-xl px-3 py-1 rounded-xl shadow-lg shadow-orange-500/20 tracking-tight">
+          DealHi<span class="text-xs font-bold text-gray-900 ml-0.5">.app</span>
+        </div>
+        <span class="hidden sm:inline-flex text-xs text-orange-400 font-medium bg-orange-500/10 border border-orange-500/20 px-2.5 py-1 rounded-full items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"></span> India AI Buy Trigger
+        </span>
+      </div>
+
+      <!-- Account Linking Action Button -->
+      <button onclick="toggleAccountsModal()" class="text-xs sm:text-sm bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 hover:border-gray-600 px-3.5 py-2 rounded-xl transition flex items-center gap-2 font-medium">
+        <i class="fa-solid fa-link text-orange-400"></i> 
+        <span>Connected Accounts</span>
+        <span id="connected-badge" class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs px-2 py-0.5 rounded-md font-bold">2/5</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Application Body -->
+  <main class="max-w-4xl mx-auto px-4 py-6 sm:py-10 w-full space-y-8">
+    
+    <!-- Hero Headline -->
+    <div class="text-center space-y-2">
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight">
+        Zero Clutter. <span class="bg-gradient-to-r from-orange-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">3 Clicks to Buy.</span>
+      </h1>
+      <p class="text-gray-400 text-sm sm:text-base max-w-lg mx-auto">
+        Bypass ads and endless listings. Gemini AI finds the best deal across Amazon, Flipkart, Myntra, Meesho & Ajio.
+      </p>
+    </div>
+
+    <!-- Quick Select Top 5 Categories Section -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-orange-400 flex items-center gap-2">
+          <i class="fa-solid fa-fire text-orange-500"></i> Top 5 Indian E-Commerce Categories
+        </h2>
+        <span class="text-xs text-gray-500">Instant Quick-Select</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+        <button onclick="quickSelectCategory('Wireless Earbuds & Wearables (TWS)')" class="group bg-gray-900 hover:bg-gray-850 border border-gray-800 hover:border-orange-500/50 p-3 rounded-xl text-left transition flex flex-col justify-between h-24 relative overflow-hidden">
+          <div class="text-orange-400 text-lg group-hover:scale-110 transition-transform"><i class="fa-solid fa-headphones"></i></div>
+          <span class="text-xs font-semibold text-gray-200 line-clamp-2">Wireless Earbuds (TWS)</span>
+          <span class="text-[10px] text-gray-500">boAt, Noise, Fire-Boltt</span>
+        </button>
+
+        <button onclick="quickSelectCategory('Ethnic Wear & Sarees')" class="group bg-gray-900 hover:bg-gray-850 border border-gray-800 hover:border-orange-500/50 p-3 rounded-xl text-left transition flex flex-col justify-between h-24 relative overflow-hidden">
+          <div class="text-pink-400 text-lg group-hover:scale-110 transition-transform"><i class="fa-solid fa-shirt"></i></div>
+          <span class="text-xs font-semibold text-gray-200 line-clamp-2">Ethnic Wear & Sarees</span>
+          <span class="text-[10px] text-gray-500">Kanjivaram, Anarkali</span>
+        </button>
+
+        <button onclick="quickSelectCategory('Kitchen Appliances (Mixer Grinders)')" class="group bg-gray-900 hover:bg-gray-850 border border-gray-800 hover:border-orange-500/50 p-3 rounded-xl text-left transition flex flex-col justify-between h-24 relative overflow-hidden">
+          <div class="text-amber-400 text-lg group-hover:scale-110 transition-transform"><i class="fa-solid fa-blender"></i></div>
+          <span class="text-xs font-semibold text-gray-200 line-clamp-2">Kitchen Appliances</span>
+          <span class="text-[10px] text-gray-500">750W Mixers, Cookers</span>
+        </button>
+
+        <button onclick="quickSelectCategory('Bedding & Home Linens')" class="group bg-gray-900 hover:bg-gray-850 border border-gray-800 hover:border-orange-500/50 p-3 rounded-xl text-left transition flex flex-col justify-between h-24 relative overflow-hidden">
+          <div class="text-blue-400 text-lg group-hover:scale-110 transition-transform"><i class="fa-solid fa-bed"></i></div>
+          <span class="text-xs font-semibold text-gray-200 line-clamp-2">Bedding & Linens</span>
+          <span class="text-[10px] text-gray-500">Cotton Bedsheets</span>
+        </button>
+
+        <button onclick="quickSelectCategory('Casual Footwear & Clogs')" class="group bg-gray-900 hover:bg-gray-850 border border-gray-800 hover:border-orange-500/50 p-3 rounded-xl text-left transition flex flex-col justify-between h-24 relative overflow-hidden col-span-2 sm:col-span-1">
+          <div class="text-emerald-400 text-lg group-hover:scale-110 transition-transform"><i class="fa-solid fa-shoe-prints"></i></div>
+          <span class="text-xs font-semibold text-gray-200 line-clamp-2">Casual Footwear</span>
+          <span class="text-[10px] text-gray-500">Clogs, Running Shoes</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main A-Z & Unified Dropdown Component -->
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-5 sm:p-6 shadow-2xl space-y-5">
+      
+      <!-- A-Z Alphabet Strip -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Browse Alphabetically (A–Z)</label>
+          <span class="text-xs text-orange-400 font-mono" id="active-letter-indicator">Current: Top Categories</span>
+        </div>
+        
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-2 no-scrollbar" id="alphabet-bar">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Main Unified Dropdown -->
+      <div>
+        <label for="popular-dropdown" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Select Item or Query</label>
+        <div class="relative">
+          <select id="popular-dropdown" onchange="handleItemSelect()" class="w-full bg-gray-950 border border-gray-700 rounded-xl px-4 py-3.5 text-gray-100 text-sm sm:text-base appearance-none focus:outline-none focus:border-orange-500 transition cursor-pointer">
+            <!-- Dynamic dropdown options -->
+          </select>
+          <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Retrieval Loading State -->
+    <div id="ai-loader" class="hidden text-center py-12 bg-gray-900/50 border border-gray-800 rounded-2xl">
+      <div class="inline-block animate-spin rounded-full h-10 w-10 border-4 border-orange-500 border-t-transparent mb-3"></div>
+      <p class="text-gray-200 font-bold text-sm sm:text-base">Google Gemini AI Searching Indian Marketplaces...</p>
+      <p class="text-xs text-gray-500 mt-1">Comparing live inventory across Amazon India, Flipkart, Myntra, Meesho, & Ajio</p>
+    </div>
+
+    <!-- AI Single Buy Match Result Card -->
+    <div id="product-card" class="hidden bg-gray-900 border border-orange-500/40 rounded-2xl p-6 shadow-2xl relative overflow-hidden transition-all">
+      <div class="absolute top-0 right-0 bg-gradient-to-l from-orange-500 to-amber-500 text-black font-extrabold text-[11px] px-3 py-1 rounded-bl-xl tracking-wide flex items-center gap-1">
+        <i class="fa-solid fa-bolt"></i> AI Conversion Match
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start pt-2 sm:pt-0">
+        <!-- Dynamic Category Icon/Thumbnail Container -->
+        <div id="res-icon-box" class="w-28 h-28 bg-gray-950 rounded-xl flex items-center justify-center shrink-0 border border-gray-800 text-4xl text-orange-400 shadow-inner">
+          <i class="fa-solid fa-box-open"></i>
+        </div>
+
+        <div class="flex-1 text-center sm:text-left space-y-3 w-full">
+          <!-- Platform & Rating Header -->
+          <div class="flex items-center justify-center sm:justify-start gap-2.5">
+            <span id="res-platform" class="bg-amber-500/10 text-amber-400 text-xs font-bold px-3 py-0.5 rounded-full border border-amber-500/30">Amazon India</span>
+            <span id="res-rating" class="text-xs text-yellow-400 font-bold bg-gray-950 px-2.5 py-0.5 rounded-md border border-gray-800"><i class="fa-solid fa-star"></i> 4.6 (12,400+ reviews)</span>
+          </div>
+
+          <!-- Product Title -->
+          <h3 id="res-title" class="text-base sm:text-lg font-bold text-white leading-snug">Product Title Placeholder</h3>
+          
+          <!-- Price & Delivery Info -->
+          <div class="flex items-baseline justify-center sm:justify-start gap-3 bg-gray-950/60 p-3 rounded-xl border border-gray-800/80">
+            <div>
+              <span class="text-xs text-gray-500 block">Best Price</span>
+              <span id="res-price" class="text-2xl font-black text-emerald-400">₹0</span>
+            </div>
+            <div class="h-8 w-px bg-gray-800"></div>
+            <div>
+              <span class="text-xs text-gray-500 block">Fulfillment</span>
+              <span id="res-delivery" class="text-xs text-gray-300 font-medium">Free Delivery by Tomorrow</span>
+            </div>
+          </div>
+
+          <!-- Direct Purchase Buy Trigger Button (Click 3) -->
+          <button onclick="triggerCheckout()" class="w-full bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-black font-black text-sm sm:text-base py-3.5 px-6 rounded-xl transition shadow-xl shadow-orange-500/10 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-bolt"></i> <span>Instant 1-Click Buy</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Toast / Trigger Log -->
+    <div id="checkout-status" class="hidden p-4 rounded-xl text-center text-sm font-medium transition-all"></div>
+
+  </main>
+
+  <!-- Linked Retailer Accounts Modal -->
+  <div id="accounts-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-md p-6 relative shadow-2xl">
+      <button onclick="toggleAccountsModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="mb-5">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-link text-orange-400"></i> Connected Retail Accounts
+        </h3>
+        <p class="text-xs text-gray-400 mt-1">Connect your accounts to authorize background 1-click buy executions.</p>
+      </div>
+
+      <div class="space-y-3" id="platforms-list">
+        <!-- Generated by JavaScript -->
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-gray-800 flex justify-between items-center text-xs text-gray-500">
+        <span>Encrypted API Token Bridge</span>
+        <span class="text-emerald-400 font-mono"><i class="fa-solid fa-shield-halved mr-1"></i> SSL 256-Bit</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-800 bg-gray-950 py-4 text-center text-xs text-gray-600">
+    DealHi.app — Indian E-Commerce AI Buy Trigger & Intent Layer
+  </footer>
+
+  <script>
+    // Top 5 Indian E-Commerce Categories (Pre-loaded at top of dropdown)
+    const top5IndianCategories = [
+      "Wireless Earbuds & Wearables (TWS)",
+      "Ethnic Wear & Sarees",
+      "Kitchen Appliances (Mixer Grinders)",
+      "Bedding & Home Linens",
+      "Casual Footwear & Clogs"
+    ];
+
+    // Alphabetical popular items database
+    const popularItemsAZ = {
+      A: ["Air Conditioners 1.5 Ton 5 Star", "Adidas Running Shoes", "Ajio Kurti Sets", "Apple iPhone 15"],
+      B: ["Bedding & Home Linens", "Boat Airdopes TWS", "Bedsheets Cotton Double", "Bluetooth Speakers"],
+      C: ["Casual Footwear & Clogs", "Crocs Clogs Men", "Casual Shirts Men", "Cetaphil Gentle Cleanser"],
+      E: ["Ethnic Wear & Sarees"],
+      K: ["Kitchen Appliances (Mixer Grinders)", "Kanjivaram Silk Sarees", "Kurta Sets Women"],
+      M: ["Meesho Sarees Below 500", "Mixer Grinders 750W", "Myntra Anarkali Suits", "Mobile Covers"],
+      S: ["Smartwatches Noise", "Skechers Walking Shoes", "Sony Wireless Headphones"],
+      W: ["Wireless Earbuds & Wearables (TWS)", "Women Ethnic Dresses", "Watches Fastrack"],
+      Z: ["Zara Jackets", "Zaveri Pearls Jewelry Set"]
+    };
+
+    // Platform connection status data
+    const platforms = [
+      { name: "Amazon India", key: "amazon", connected: true, color: "text-amber-400", icon: "fa-amazon" },
+      { name: "Flipkart", key: "flipkart", connected: true, color: "text-blue-400", icon: "fa-bag-shopping" },
+      { name: "Myntra", key: "myntra", connected: false, color: "text-pink-400", icon: "fa-shirt" },
+      { name: "Meesho", key: "meesho", connected: false, color: "text-fuchsia-400", icon: "fa-store" },
+      { name: "Ajio", key: "ajio", connected: false, color: "text-yellow-400", icon: "fa-tags" }
+    ];
+
+    // Mock category metadata for direct UI rendering
+    const categoryDetailsMap = {
+      "Wireless Earbuds & Wearables (TWS)": { price: "₹1,299", platform: "Amazon India", rating: "4.6", delivery: "Free Next-Day Delivery", icon: "fa-headphones" },
+      "Ethnic Wear & Sarees": { price: "₹899", platform: "Myntra", rating: "4.7", delivery: "Free 2-Day Delivery", icon: "fa-shirt" },
+      "Kitchen Appliances (Mixer Grinders)": { price: "₹2,499", platform: "Flipkart", rating: "4.5", delivery: "Free Delivery by Thursday", icon: "fa-blender" },
+      "Bedding & Home Linens": { price: "₹599", platform: "Meesho", rating: "4.4", delivery: "Free 3-Day Delivery", icon: "fa-bed" },
+      "Casual Footwear & Clogs": { price: "₹1,495", platform: "Ajio", rating: "4.5", delivery: "Free Next-Day Delivery", icon: "fa-shoe-prints" }
+    };
+
+    let selectedLetter = "TOP";
+
+    // Initialize Page
+    document.addEventListener("DOMContentLoaded", () => {
+      renderAlphabetBar();
+      populateDropdownWithTop();
+      renderPlatforms();
+    });
+
+    // Render Alphabet Filter Bar with TOP category option
+    function renderAlphabetBar() {
+      const bar = document.getElementById("alphabet-bar");
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+      
+      let html = `
+        <button onclick="selectTopCategories()" id="btn-letter-TOP" 
+          class="px-3 py-1.5 rounded-lg text-xs font-black transition shrink-0 bg-orange-500 text-black">
+          🔥 TOP 5
+        </button>
+      `;
+
+      html += letters.map(letter => `
+        <button onclick="selectLetter('${letter}')" id="btn-letter-${letter}" 
+          class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition shrink-0 bg-gray-800 text-gray-400 hover:bg-gray-700">
+          ${letter}
+        </button>
+      `).join("");
+
+      bar.innerHTML = html;
+    }
+
+    // Select Top Categories View
+    function selectTopCategories() {
+      selectedLetter = "TOP";
+      updateActiveLetterUI("btn-letter-TOP", "Top 5 Indian Categories");
+      populateDropdownWithTop();
+    }
+
+    // Select Specific Alphabet Letter
+    function selectLetter(letter) {
+      selectedLetter = letter;
+      updateActiveLetterUI(`btn-letter-${letter}`, `Alphabet '${letter}'`);
+      populateDropdownForLetter(letter);
+    }
+
+    function updateActiveLetterUI(btnId, labelText) {
+      document.querySelectorAll("#alphabet-bar button").forEach(btn => {
+        btn.className = "px-2.5 py-1.5 rounded-lg text-xs font-bold transition shrink-0 bg-gray-800 text-gray-400 hover:bg-gray-700";
+      });
+      document.getElementById(btnId).className = "px-3 py-1.5 rounded-lg text-xs font-black transition shrink-0 bg-orange-500 text-black";
+      document.getElementById("active-letter-indicator").innerText = labelText;
+    }
+
+    // Populate Dropdown with Top 5 Categories at top
+    function populateDropdownWithTop() {
+      const select = document.getElementById("popular-dropdown");
+      
+      let optionsHtml = `<option value="" disabled selected>Select from Top 5 Indian Categories...</option>`;
+      
+      optionsHtml += `<optgroup label="🔥 Top 5 India E-Commerce Categories">`;
+      optionsHtml += top5IndianCategories.map(cat => `<option value="${cat}">${cat}</option>`).join("");
+      optionsHtml += `</optgroup>`;
+
+      optionsHtml += `<optgroup label="Alphabetical A-Z Popular Items">`;
+      Object.keys(popularItemsAZ).forEach(letr => {
+        popularItemsAZ[letr].forEach(item => {
+          if (!top5IndianCategories.includes(item)) {
+            optionsHtml += `<option value="${item}">${item}</option>`;
+          }
+        });
+      });
+      optionsHtml += `</optgroup>`;
+
+      select.innerHTML = optionsHtml;
+    }
+
+    // Populate Dropdown for specific letter
+    function populateDropdownForLetter(letter) {
+      const select = document.getElementById("popular-dropdown");
+      const items = popularItemsAZ[letter] || [];
+      
+      let optionsHtml = `<option value="" disabled selected>Select an item beginning with '${letter}'...</option>`;
+      
+      if (items.length > 0) {
+        optionsHtml += items.map(item => `<option value="${item}">${item}</option>`).join("");
+      } else {
+        optionsHtml += `<option value="" disabled>No pre-indexed items for '${letter}' — click to query Google AI</option>`;
+      }
+
+      select.innerHTML = optionsHtml;
+    }
+
+    // Quick Select Button Event
+    function quickSelectCategory(categoryName) {
+      const select = document.getElementById("popular-dropdown");
+      select.value = categoryName;
+      handleItemSelect();
+    }
+
+    // Handle Item Selection (Click 2 Trigger -> Simulated Google AI Gemini API)
+    function handleItemSelect() {
+      const selectedItem = document.getElementById("popular-dropdown").value;
+      if (!selectedItem) return;
+
+      document.getElementById("product-card").classList.add("hidden");
+      document.getElementById("checkout-status").classList.add("hidden");
+      document.getElementById("ai-loader").classList.remove("hidden");
+
+      // Simulated Gemini API AI Intent Fetching
+      setTimeout(() => {
+        document.getElementById("ai-loader").classList.add("hidden");
+        document.getElementById("product-card").classList.remove("hidden");
+
+        const meta = categoryDetailsMap[selectedItem] || {
+          price: "₹" + (Math.floor(Math.random() * 1500) + 499),
+          platform: platforms[Math.floor(Math.random() * 2)].name,
+          rating: "4.5",
+          delivery: "Free Delivery by Tomorrow",
+          icon: "fa-box-open"
+        };
+
+        document.getElementById("res-title").innerText = selectedItem;
+        document.getElementById("res-price").innerText = meta.price;
+        document.getElementById("res-platform").innerText = meta.platform;
+        document.getElementById("res-rating").innerHTML = `<i class="fa-solid fa-star"></i> ${meta.rating} (Direct Match)`;
+        document.getElementById("res-delivery").innerText = meta.delivery;
+        document.getElementById("res-icon-box").innerHTML = `<i class="fa-solid ${meta.icon}"></i>`;
+      }, 600);
+    }
+
+    // Trigger Instant 1-Click Buy (Click 3 Trigger)
+    function triggerCheckout() {
+      const statusBox = document.getElementById("checkout-status");
+      statusBox.classList.remove("hidden");
+      statusBox.className = "p-4 rounded-xl text-center text-sm font-medium border bg-orange-500/10 text-orange-400 border-orange-500/30 animate-pulse";
+      statusBox.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Triggering encrypted API purchase via connected platform account...';
+
+      setTimeout(() => {
+        statusBox.className = "p-4 rounded-xl text-center text-sm font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
+        statusBox.innerHTML = '<i class="fa-solid fa-circle-check mr-2"></i> <strong>Order Executed Successfully!</strong> Instant purchase triggered with default address & payment.';
+      }, 1400);
+    }
+
+    // Modal Display Handlers
+    function toggleAccountsModal() {
+      const modal = document.getElementById("accounts-modal");
+      modal.classList.toggle("hidden");
+      modal.classList.toggle("flex");
+    }
+
+    function renderPlatforms() {
+      const list = document.getElementById("platforms-list");
+      list.innerHTML = platforms.map(p => `
+        <div class="flex items-center justify-between p-3 bg-gray-950 border border-gray-800 rounded-xl">
+          <div class="flex items-center gap-3">
+            <i class="fa-solid ${p.icon} ${p.color} text-lg"></i>
+            <div>
+              <span class="text-sm font-semibold text-white block leading-tight">${p.name}</span>
+              <span class="text-[10px] text-gray-500">${p.connected ? 'OAuth Active' : 'Not Connected'}</span>
+            </div>
+          </div>
+          <button onclick="togglePlatformConnect('${p.key}')" class="text-xs px-3 py-1.5 rounded-lg font-bold transition ${p.connected ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}">
+            ${p.connected ? '<i class="fa-solid fa-check mr-1"></i> Connected' : 'Connect'}
+          </button>
+        </div>
+      `).join("");
+
+      const count = platforms.filter(p => p.connected).length;
+      document.getElementById("connected-badge").innerText = `${count}/5`;
+    }
+
+    function togglePlatformConnect(key) {
+      const platform = platforms.find(p => p.key === key);
+      if (platform) {
+        platform.connected = !platform.connected;
+        renderPlatforms();
+      }
+    }
+  </script>
+</body>
+</html>
